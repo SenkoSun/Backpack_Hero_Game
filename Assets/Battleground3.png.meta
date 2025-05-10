@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 7293cd348cf77ae4a8eb91bdc1018746
+guid: e81c993f878adb249942e281c6e8296f
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7678611579776902274
-    second: backgroundColorForest_0
+      213: -21357841802768676
+    second: Battleground3_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: backgroundColorForest_0
+      name: Battleground3_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 1024
-        height: 1024
+        width: 1920
+        height: 1080
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 284adcc7c88ef8a60800000000000000
-      internalID: 7678611579776902274
+      spriteID: cde4d22f72f14bff0800000000000000
+      internalID: -21357841802768676
       vertices: []
       indices: 
       edges: []
