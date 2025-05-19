@@ -8,7 +8,9 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     public enum ItemType
     {
         Potion,
-        Weapon
+        Weapon,
+        Armor,
+        Accessory
     }
 
     [Header("Item Settings")]
@@ -16,6 +18,15 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     public float effectValue;        // Значение эффекта (урон/лечение)
     public float cooldownTime;       // Время перезарядки
     public bool isEquipped;          // Экипирован ли предмет
+
+    [Header("Weapon Properties")]
+    public float damage;             // Урон оружия
+    public float attackRange;        // Дистанция атаки
+    public float attackSpeed;        // Скорость атаки (ударов в секунду)
+    public bool isRanged;            // Является ли оружие дальнобойным
+    public float projectileSpeed;    // Скорость снаряда (для дальнобойного оружия)
+    public float criticalChance;     // Шанс критического удара
+    public float criticalMultiplier; // Множитель критического урона
 
     [Header("UI References")]
     public Image cooldownImage;      // Ссылка на изображение перезарядки
