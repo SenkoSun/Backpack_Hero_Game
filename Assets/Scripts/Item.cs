@@ -168,7 +168,7 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
             // ВАЖНО: Если Items Panel Handler имеет свою логику управления предметами (списки, массивы),
             // возможно, нужно вызвать у targetItemsPanel метод для добавления предмета обратно в его систему.
-             // targetItemsPanel.AddItemToList(this); // Пример вызова
+             targetItemsPanel.AddItemBack(this); // Пример вызова - ДОБАВЛЕН ВЫЗОВ
         }
         else // 3. Отпущено над занятым слотом ИЛИ над другой областью, не являющейся слотом или ItemsPanelHandler
         {
@@ -231,7 +231,7 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
             // ВАЖНО: Если Items Panel Handler управляет списком предметов,
             // здесь, возможно, нужно вызвать его метод для добавления предмета обратно в список.
-            // originalItemsPanel.AddItemBack(this); // Пример вызова
+            originalItemsPanel.AddItemBack(this); // Пример вызова - ДОБАВЛЕН ВЫЗОВ
 
             Debug.Log($"Item {gameObject.name} returned to its original container: {parentAfterDrag.gameObject.name}.");
 
@@ -270,21 +270,25 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
              // Проверяем, находится ли курсор над этим элементом UI
              if (RectTransformUtility.RectangleContainsScreenPoint(GetComponent<RectTransform>(), Input.mousePosition, Camera.main))
              {
-                  Debug.Log("Right clicked on item: " + gameObject.name);
+                  // Игнорируем правый клик для дальнобойного оружия, которое активируется автоматически
+                  if (!isRanged)
+                  {
+                       Debug.Log("Right clicked on item: " + gameObject.name);
 
-                  // Логика использования: проверьте, где находится предмет (например, в слоте экипировки)
-                   Slot currentSlot = transform.parent.GetComponent<Slot>(); // Получаем текущий слот предмета
-                   // if (currentSlot != null && currentSlot.CompareTag("EquipSlot")) // Пример проверки
-                   // {
-                       if (ItemUsageManager.Instance != null)
-                       {
-                           ItemUsageManager.Instance.UseItem(this); // Передаем сам предмет для использования
-                       }
-                       else
-                       {
-                           Debug.LogError("ItemUsageManager.Instance is not found! Ensure it exists in the scene.");
-                       }
-                   // }
+                       // Логика использования: проверьте, где находится предмет (например, в слоте экипировки)
+                        Slot currentSlot = transform.parent.GetComponent<Slot>(); // Получаем текущий слот предмета
+                        // if (currentSlot != null && currentSlot.CompareTag("EquipSlot")) // Пример проверки
+                        // {
+                            if (ItemUsageManager.Instance != null)
+                            {
+                                ItemUsageManager.Instance.UseItem(this); // Передаем сам предмет для использования
+                            }
+                            else
+                            {
+                                Debug.LogError("ItemUsageManager.Instance is not found! Ensure it exists in the scene.");
+                            }
+                        // }
+                  }
              }
          }
     }

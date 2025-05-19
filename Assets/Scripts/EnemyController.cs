@@ -5,6 +5,9 @@ public class EnemyController : MonoBehaviour
     [Header("Настройки")]
     public float attackCooldown = 2f;
     public int damage = 10;
+    public float maxHealth = 50f; // Максимальное здоровье врага
+
+    private float currentHealth; // Текущее здоровье
     
     [Header("Снаряд")]
     public GameObject projectilePrefab; // Перетащите префаб снаряда сюда!
@@ -21,6 +24,9 @@ public class EnemyController : MonoBehaviour
         // Если firePoint не назначен - используем позицию врага
         if (firePoint == null) 
             firePoint = transform;
+
+        // Инициализируем текущее здоровье максимальным при старте
+        currentHealth = maxHealth;
     }
 
     void Update()
@@ -59,9 +65,22 @@ public class EnemyController : MonoBehaviour
 
     public void TakeDamage(float amount)
     {
-        // В более полной версии здесь будет вычитание здоровья врага.
-        // Пока что, просто уничтожим врага для демонстрации получения урона.
-        Debug.Log($"Enemy took {amount} damage.");
-        Destroy(gameObject);
+        // Вычитаем урон из текущего здоровья
+        currentHealth -= amount;
+        Debug.Log($"{gameObject.name} took {amount} damage. Remaining health: {currentHealth}");
+
+        // Проверяем, умер ли враг
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
+
+    // Метод для обработки смерти врага
+    void Die()
+    {
+        Debug.Log($"{gameObject.name} died.");
+        // TODO: Добавить логику выпадения лута, анимацию смерти и т.д.
+        Destroy(gameObject); // Пока просто уничтожаем объект
     }
 }
