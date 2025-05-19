@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &9159981253383730294
+--- !u!1 &6902816982095835179
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,26 +8,26 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 6816619231390291333}
-  - component: {fileID: 4132488611413491750}
-  - component: {fileID: 6652537817689315476}
-  - component: {fileID: 8355890728163385136}
-  - component: {fileID: 4777505755257110793}
+  - component: {fileID: 4854985278904413960}
+  - component: {fileID: 7551209809341576714}
+  - component: {fileID: 532870515646790754}
+  - component: {fileID: 1645133791995534081}
+  - component: {fileID: 89674510950858455}
   m_Layer: 5
-  m_Name: Shuriken_Item_Prefab
+  m_Name: Shuriken_UI_Item_Prefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &6816619231390291333
+--- !u!224 &4854985278904413960
 RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9159981253383730294}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_GameObject: {fileID: 6902816982095835179}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -35,17 +35,25 @@ RectTransform:
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 90.62499, y: 90.69419}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &4132488611413491750
+--- !u!222 &7551209809341576714
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6902816982095835179}
+  m_CullTransparentMesh: 1
+--- !u!114 &532870515646790754
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9159981253383730294}
+  m_GameObject: {fileID: 6902816982095835179}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
@@ -69,33 +77,25 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!222 &6652537817689315476
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9159981253383730294}
-  m_CullTransparentMesh: 1
---- !u!225 &8355890728163385136
+--- !u!225 &1645133791995534081
 CanvasGroup:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9159981253383730294}
+  m_GameObject: {fileID: 6902816982095835179}
   m_Enabled: 1
   m_Alpha: 1
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
---- !u!114 &4777505755257110793
+--- !u!114 &89674510950858455
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9159981253383730294}
+  m_GameObject: {fileID: 6902816982095835179}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fc82a38873e7135449594f3bc39d3968, type: 3}
@@ -103,14 +103,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemType: 1
   effectValue: 0
-  cooldownTime: 2
+  cooldownTime: 1
   isEquipped: 0
-  damage: 20
-  attackRange: 2000
-  attackSpeed: 10
+  damage: 40
+  attackRange: 10000
+  attackSpeed: 1
   isRanged: 1
-  projectileSpeed: 20
+  projectileSpeed: 1
   criticalChance: 50
-  criticalMultiplier: 4
+  criticalMultiplier: 2
   cooldownImage: {fileID: 0}
   parentAfterDrag: {fileID: 0}

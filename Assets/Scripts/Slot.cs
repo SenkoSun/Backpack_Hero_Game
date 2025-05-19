@@ -53,6 +53,19 @@ public class Slot : MonoBehaviour, IDropHandler
              itemInSlot = item; // Устанавливаем ссылку на предмет
              // Логика установки родителя, позиции и размера ПЕРЕНЕСЕНА В Item.OnEndDrag ИЛИ Item.ReturnToParent
              Debug.Log($"Slot {gameObject.name} now holds {item.gameObject.name}.");
+
+             // TODO: Получить ссылку на ItemsPanelHandler
+             ItemsPanelHandler iph = FindObjectOfType<ItemsPanelHandler>(); // Простой способ найти на сцене
+             if (iph != null)
+             {
+                 // Добавляем предмет в список активных предметов в ItemsPanelHandler
+                 iph.AddItemBack(item); // AddItemBack уже добавляет в inventoryItems
+             }
+             else
+             {
+                  Debug.LogWarning("ItemsPanelHandler not found on scene! Cannot add item to active list.");
+             }
+
              return true; // Сообщаем, что слот теперь держит предмет
         }
          else

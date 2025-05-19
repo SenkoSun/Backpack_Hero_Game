@@ -143,50 +143,35 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
             handled = true; // Отпускание обработано (успешно помещено в слот)
             Debug.Log($"Item {gameObject.name} successfully placed in slot {targetSlot.gameObject.name}.");
         }
-        else if (targetItemsPanel != null)
+        else // Если отпущено НЕ над свободным слотом
         {
-            // 2. Отпущено над зоной Items Panel Handler
-            transform.SetParent(targetItemsPanel.transform); // Устанавливаем родителя на Items Panel Handler
+            // В этой секции теперь обрабатывается:
+            // - Отпущено над занятым слотом
+            // - Отпущено над зоной ItemsPanelHandler (так как секция выше удалена)
+            // - Отпущено над другой областью, не являющейся слотом или ItemsPanelHandler
 
-            // Сбрасываем локальную позицию (можно поместить в начало списка или в конец, как нужно)
-            transform.localPosition = Vector3.zero; // Пример: помещаем в (0,0) родителя Items Panel Handler
-
-            // Возможно, нужно сбросить размер или установить определенный RectTransform для предметов в этой зоне
-             // Например, вернуться к исходному размеру и анкорам 0,1 если Items Panel Handler - это Grid Layout
-             RectTransform rt = GetComponent<RectTransform>();
-             rt.anchorMin = originalAnchorsMin; // Восстанавливаем исходные анкоры
-             rt.anchorMax = originalAnchorsMax;
-             rt.pivot = originalPivot; // Восстанавливаем исходный пивот
-             rt.sizeDelta = originalSize; // Возвращаем исходный sizeDelta
-
-            // В этой логике предмет не попадает обратно в "слот" Items Panel Handler,
-            // а просто становится его дочерним элементом.
-            // Если Items Panel Handler использует Grid Layout Group, Unity сама расставит элементы.
-
-            handled = true; // Отпускание обработано (возвращено в зону Items Panel Handler)
-            Debug.Log($"Item {gameObject.name} returned to Items Panel Handler zone: {targetItemsPanel.gameObject.name}.");
-
-            // ВАЖНО: Если Items Panel Handler имеет свою логику управления предметами (списки, массивы),
-            // возможно, нужно вызвать у targetItemsPanel метод для добавления предмета обратно в его систему.
-             targetItemsPanel.AddItemBack(this); // Пример вызова - ДОБАВЛЕН ВЫЗОВ
-        }
-        else // 3. Отпущено над занятым слотом ИЛИ над другой областью, не являющейся слотом или ItemsPanelHandler
-        {
-            // Если отпущено над занятым слотом - возвращаем на исходное место
-            if (targetSlot != null && targetSlot.GetItemInSlot() != null)
-            {
-                 Debug.Log($"Target slot {targetSlot.gameObject.name} is occupied by {targetSlot.GetItemInSlot().gameObject.name}. Returning {gameObject.name} to original position.");
-                 ReturnToParent(); // Возвращаем в исходный слот
-                 handled = true; // Обработано как возврат в исходный слот
-            }
-            else
-            {
-                 // Если отпущено совсем вне целевых зон (не слот, не ItemsPanelHandler)
-                 // В этой версии мы возвращаем предмет на исходное место, т.к. не хотим "выбрасывать" куда попало.
+            // В любом из этих случаев, если предмет не попал в свободный слот, возвращаем его
+             if (targetSlot != null && targetSlot.GetItemInSlot() != null)
+             {
+                  // Отпущено над занятым слотом - возвращаем на исходное место
+                  Debug.Log($"Target slot {targetSlot.gameObject.name} is occupied by {targetSlot.GetItemInSlot().gameObject.name}. Returning {gameObject.name} to original position.");
+                  ReturnToParent(); // Возвращаем в исходный слот
+                  handled = true; // Обработано как возврат в исходный слот
+             }
+             // Добавляем проверку на ItemsPanelHandler здесь, если хотим, чтобы он обрабатывался отдельно
+             else if (targetItemsPanel != null)
+             {
+                 // Отпущено над зоной Items Panel Handler - НО ОБРАБОТКА УЖЕ В ItemsPanelHandler.OnDrop
+                 Debug.Log($"Item {gameObject.name} dropped over Items Panel Handler zone, letting OnDrop handle.");
+                 handled = true; // Считаем обработанным, ItemsPanelHandler.OnDrop сработает
+             }
+             else
+             {
+                 // Если отпущено совсем вне целевых зон
                  Debug.Log($"Item {gameObject.name} dropped outside any valid drop zone ({dropTarget?.name ?? "None"}). Returning to original position.");
                  ReturnToParent(); // Возвращаем в исходный слот
                  handled = true; // Обработано как возврат в исходный слот
-            }
+             }
         }
         // --- Конец обработки результата отпускания ---
 
