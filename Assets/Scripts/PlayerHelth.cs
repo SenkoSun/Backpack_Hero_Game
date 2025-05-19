@@ -79,4 +79,12 @@ public class PlayerHealth : MonoBehaviour
         if (deathScreen != null)
             deathScreen.SetActive(false);
     }
+
+    public void Heal(float amount)
+    {
+        if (isDead) return;
+        currentHealth += Mathf.RoundToInt(amount); // Преобразуем float в int для здоровья
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth); // Не превышаем максимальное здоровье
+        UpdateHealthUI();
+    }
 }

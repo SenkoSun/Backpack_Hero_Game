@@ -56,4 +56,12 @@ public class EnemyController : MonoBehaviour
         if (projectileScript != null)
             projectileScript.damage = damage;
     }
+
+    public void TakeDamage(float amount)
+    {
+        // В более полной версии здесь будет вычитание здоровья врага.
+        // Пока что, просто уничтожим врага для демонстрации получения урона.
+        Debug.Log($"Enemy took {amount} damage.");
+        Destroy(gameObject);
+    }
 }
