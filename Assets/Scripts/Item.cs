@@ -147,10 +147,10 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         {
             // В этой секции теперь обрабатывается:
             // - Отпущено над занятым слотом
-            // - Отпущено над зоной ItemsPanelHandler (так как секция выше удалена)
+            // - Отпущено над зоной ItemsPanelHandler
             // - Отпущено над другой областью, не являющейся слотом или ItemsPanelHandler
 
-            // В любом из этих случаев, если предмет не попал в свободный слот, возвращаем его
+            // В любом из этих случаев, если предмет не попал в свободный слот, обрабатываем другие зоны или возвращаем его
              if (targetSlot != null && targetSlot.GetItemInSlot() != null)
              {
                   // Отпущено над занятым слотом - возвращаем на исходное место
@@ -158,12 +158,24 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
                   ReturnToParent(); // Возвращаем в исходный слот
                   handled = true; // Обработано как возврат в исходный слот
              }
-             // Добавляем проверку на ItemsPanelHandler здесь, если хотим, чтобы он обрабатывался отдельно
-             else if (targetItemsPanel != null)
+             else if (targetItemsPanel != null) // Отпущено над зоной Items Panel Handler
              {
-                 // Отпущено над зоной Items Panel Handler - НО ОБРАБОТКА УЖЕ В ItemsPanelHandler.OnDrop
-                 Debug.Log($"Item {gameObject.name} dropped over Items Panel Handler zone, letting OnDrop handle.");
-                 handled = true; // Считаем обработанным, ItemsPanelHandler.OnDrop сработает
+                 Debug.Log($"Item {gameObject.name} dropped over Items Panel Handler zone. Handling placement.");
+
+                 // Устанавливаем родителя на Items Panel Handler
+                 transform.SetParent(targetItemsPanel.transform);
+
+                 // Сбрасываем локальную позицию и размер/анкоры для отображения в ItemsPanelHandler
+                 transform.localPosition = Vector3.zero;
+                 RectTransform rt = GetComponent<RectTransform>();
+                 rt.sizeDelta = originalSize; // Исходный sizeDelta
+                 rt.anchorMin = originalAnchorsMin; // Исходные анкоры
+                 rt.anchorMax = originalAnchorsMax;
+                 rt.pivot = originalPivot; // Исходный пивот
+
+                 // Note: ItemsPanelHandler.OnDrop will also be triggered and handles adding to the list.
+
+                 handled = true; // Отпускание обработано (попал в ItemsPanelHandler)
              }
              else
              {
