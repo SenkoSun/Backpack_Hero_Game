@@ -27,10 +27,16 @@ public class EnemyController : MonoBehaviour
 
         // Инициализируем текущее здоровье максимальным при старте
         currentHealth = maxHealth;
+        
+        // Устанавливаем время следующей атаки в будущем, чтобы избежать немедленной атаки при спавне
+        nextAttackTime = Time.time + attackCooldown; // Можно установить еще больше, если нужна дополнительная задержка после старта битвы
     }
 
     void Update()
     {
+        // Проверяем, активна ли битва, прежде чем атаковать
+        if (CombatManager.Instance == null || !CombatManager.Instance.isBattleActive) return; // Не атаковать, если битва не активна
+
         if (Time.time >= nextAttackTime)
         {
             Attack();
