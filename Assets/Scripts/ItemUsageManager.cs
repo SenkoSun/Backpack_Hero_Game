@@ -31,6 +31,9 @@ public class ItemUsageManager : MonoBehaviour
     
     public void UseItem(Item item)
     {
+        // Проверяем, активна ли битва, прежде чем использовать предмет
+        if (CombatManager.Instance != null && !CombatManager.Instance.isBattleActive) return; // Не использовать предметы, если битва не активна
+
         if (CanUseItem(item))
         {
             // Обработка эффекта предмета
@@ -52,42 +55,21 @@ public class ItemUsageManager : MonoBehaviour
         {
             case Item.ItemType.Potion:
                 // Обработка эффекта зелья
+                // Для зелий, возможно, нужно вызвать UseItemInCombat из CombatManager
+                 if (CombatManager.Instance != null)
+                 {
+                      // TODO: Определить цель для зелья (игрок или враг)
+                     // CombatManager.Instance.UseItemInCombat(item, targetGameObject);
+                 }
                 break;
             case Item.ItemType.Weapon:
                 if (item.isRanged)
                 {
-                    ThrowWeapon(item);
+                    // Дальнобойное оружие атакует автоматически в Update
+                    // Эту логику, возможно, нужно убрать, если автоматическая атака только в Update
                 }
+                // TODO: Для ближнего боя нужно добавить логику атаки
                 break;
-        }
-    }
-    
-    private void ThrowWeapon(Item item)
-    {
-        if (shurikenPrefab != null && projectileSpawnPoint != null)
-        {
-            // Получаем позицию мыши в мировых координатах
-            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            mousePosition.z = 0f;
-
-            // Вычисляем направление броска
-            Vector3 direction = (mousePosition - projectileSpawnPoint.position).normalized;
-
-            // Создаем сюрикен
-            GameObject shuriken = Instantiate(shurikenPrefab, projectileSpawnPoint.position, Quaternion.identity);
-            ShurikenProjectile projectile = shuriken.GetComponent<ShurikenProjectile>();
-
-            if (projectile != null)
-            {
-                // Устанавливаем урон сюрикена равным урону оружия
-                projectile.damage = item.damage;
-                // Инициализируем сюрикен
-                projectile.Initialize(direction, transform);
-            }
-        }
-        else
-        {
-            Debug.LogError("Shuriken prefab or spawn point is not set!");
         }
     }
     
@@ -101,6 +83,9 @@ public class ItemUsageManager : MonoBehaviour
     // Метод Update для автоматического использования предметов
     private void Update()
     {
+        // Проверяем, активна ли битва, прежде чем искать врагов и атаковать
+        if (CombatManager.Instance == null || !CombatManager.Instance.isBattleActive) return; // Не атаковать, если битва не активна
+
         // Получаем список активных предметов из вашего менеджера инвентаря
         // В данном случае используем список из ItemsPanelHandler как пример активных предметов
         List<Item> activeItems = (itemsPanelHandler != null) ? itemsPanelHandler.GetInventoryItems() : new List<Item>();
@@ -142,15 +127,15 @@ public class ItemUsageManager : MonoBehaviour
         foreach (var hitCollider in hitColliders)
         {
             // TODO: Возможно, добавить проверку, что это действительно враг, используя тег или компонент
-            // if (hitCollider.CompareTag("Enemy"))
-            // {
+             if (hitCollider.CompareTag("Enemy")) // Используем тег для более точной идентификации
+            {
                 float distanceToEnemy = Vector3.Distance(transform.position, hitCollider.transform.position);
                 if (distanceToEnemy < minDistance)
                 {
                     minDistance = distanceToEnemy;
                     nearestEnemy = hitCollider.transform;
                 }
-            // }
+            }
         }
         return nearestEnemy;
     }
