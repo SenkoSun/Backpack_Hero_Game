@@ -43,6 +43,10 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     private Vector2 originalAnchorsMin; // Исходные анкоры
     private Vector2 originalAnchorsMax;
     private Vector2 originalPivot;
+    public GameObject mergeEffectPrefab; // Эффект при объединении
+
+    public int itemLevel = 1; // Уровень предмета (1, 2 или 3)
+    public Sprite[] levelSprites; // Спрайты для каждого уровня
 
     private void Awake()
     {
@@ -54,6 +58,7 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         originalAnchorsMin = originalRect.anchorMin; // Сохраняем исходные анкоры
         originalAnchorsMax = originalRect.anchorMax;
         originalPivot = originalRect.pivot; // Сохраняем исходный пивот
+        UpdateVisuals();
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -99,6 +104,7 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
             out Vector2 localPoint
         );
         transform.localPosition = localPoint; // Устанавливаем локальную позицию
+        transform.position = Input.mousePosition;
     }
 
     public void OnEndDrag(PointerEventData eventData)
@@ -191,6 +197,53 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         // Восстанавливаем параметры CanvasGroup и цвета в конце
         canvasGroup.blocksRaycasts = true; // Включаем Raycast обратно
         itemImage.color = normalColor; // Восстанавливаем исходный цвет
+        if (transform.parent == parentAfterDrag) {
+            TryMergeItems(parentAfterDrag);
+        }
+    }
+
+    private void TryMergeItems(Transform slot) {
+        // Если в слоте уже есть предмет
+        if (slot.childCount > 1) {
+            Item otherItem = slot.GetChild(0).GetComponent<Item>();
+            
+            // Проверяем возможность объединения
+            if (CanMerge(otherItem)) {
+                MergeItems(otherItem);
+            }
+        }
+    }
+
+    public bool CanMerge(Item other) {
+        // Предметы можно объединять только если:
+        return itemType == other.itemType &&  // Одинакового типа
+               itemLevel == other.itemLevel && // Одинакового уровня
+               itemLevel < 3;                // Не максимальный уровень
+    }
+
+    public void MergeItems(Item other) {
+        // Создаем новый предмет
+        GameObject newItemObj = Instantiate(gameObject, transform.parent);
+        Item newItem = newItemObj.GetComponent<Item>();
+        newItem.itemLevel = itemLevel + 1;
+        newItem.UpdateVisuals();
+
+        // Эффект объединения
+        if(mergeEffectPrefab != null) {
+            Instantiate(mergeEffectPrefab, transform.position, Quaternion.identity);
+        }
+
+        // Уничтожаем старые предметы
+        Destroy(other.gameObject);
+        Destroy(gameObject);
+
+        Debug.Log($"Создан {itemType} уровня {newItem.itemLevel}");
+    }
+
+    public void UpdateVisuals() {
+        if(itemLevel <= levelSprites.Length) {
+            GetComponent<Image>().sprite = levelSprites[itemLevel-1];
+        }
     }
 
     // Возвращает предмет на исходное место (родителя parentAfterDrag)
