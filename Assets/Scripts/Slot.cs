@@ -37,6 +37,19 @@ public class Slot : MonoBehaviour, IDropHandler
     // Метод, вызываемый Unity Event System при отпускании перетаскиваемого объекта над этим слотом
     public void OnDrop(PointerEventData eventData)
     {
+        Item droppedItem = eventData.pointerDrag.GetComponent<Item>();
+    
+        if (transform.childCount == 0) {
+            // Обычное перемещение
+            droppedItem.parentAfterDrag = transform;
+        }
+        else {
+            // Попытка объединения
+            Item existingItem = transform.GetChild(0).GetComponent<Item>();
+            if (existingItem.CanMerge(droppedItem)) {
+                existingItem.MergeItems(droppedItem);
+            }
+    }
         // Этот метод теперь НЕ СОДЕРЖИТ логику размещения предмета.
         // Вся логика отпускания перенесена в Item.OnEndDrag.
          Debug.Log($"Item dropped over slot {gameObject.name}. Processing handled by Item.OnEndDrag.");
