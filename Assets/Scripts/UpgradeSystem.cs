@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class SimpleUpgradeSystem : MonoBehaviour
 {
@@ -28,11 +29,15 @@ public class SimpleUpgradeSystem : MonoBehaviour
 
     void SetupUpgrade(int index)
     {
+        string[] names_characteristic = { "attack", "defense", "attack_speed", "crit_damage", "crit_chance" };
         var upgrade = upgrades[index];
         
-        // Загрузка сохраненного уровня
+        // // Загрузка сохраненного уровня
         upgrade.currentLevel = PlayerPrefs.GetInt($"Upgrade_{index}_Level", 0);
+        PlayerHealth.charactiristis[names_characteristic[index]] = upgrade.currentLevel;
+        Debug.Log($"{names_characteristic[index]} - {upgrade.statName}: {upgrade.currentLevel}");
         upgrade.slider.value = upgrade.currentLevel;
+        
         
         // Обновляем отображение цены
         UpdateCostText(upgrade);
@@ -43,6 +48,7 @@ public class SimpleUpgradeSystem : MonoBehaviour
 
     void TryUpgrade(int index)
     {
+        string[] names_characteristic = { "attack", "defense", "attack_speed", "crit_damage", "crit_chance" };
         var upgrade = upgrades[index];
         
         // Проверка границ массива
@@ -67,6 +73,7 @@ public class SimpleUpgradeSystem : MonoBehaviour
         // Улучшение
         upgrade.currentLevel++;
         upgrade.slider.value = upgrade.currentLevel;
+        PlayerHealth.charactiristis[names_characteristic[index]] = upgrade.currentLevel;
         PlayerPrefs.SetInt($"Upgrade_{index}_Level", upgrade.currentLevel);
         
         // Обновление интерфейса
