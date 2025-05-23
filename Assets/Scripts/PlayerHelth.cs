@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Collections.Generic;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -13,7 +14,14 @@ public class PlayerHealth : MonoBehaviour
 
     public GameObject player; // Перетащите игрока
     public GameObject[] enemies; // Перетащите всех врагов
-
+    static public Dictionary<string, int> charactiristis = new Dictionary<string, int>()
+    {
+        ["attack"] = 0,
+        ["defense"] = 0,
+        ["attack_speed"] = 0,
+        ["crit_damage"] = 0,
+        ["crit_chance"] = 0,
+    };
     void Start()
     {
         currentHealth = maxHealth;
@@ -25,6 +33,9 @@ public class PlayerHealth : MonoBehaviour
     public void TakeDamage(int damage)
     {
         if (isDead) return;
+
+        Debug.Log($"{charactiristis["defense"]}");
+        Debug.Log($"Player apple damage {damage - charactiristis["defense"]}");
         
         currentHealth -= damage;
         UpdateHealthUI();
