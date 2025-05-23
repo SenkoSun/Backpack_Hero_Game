@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using System.Collections.Generic;
+using System.IO;
 
 public class ItemsPanelHandler : MonoBehaviour, IDropHandler
 {
@@ -9,9 +10,57 @@ public class ItemsPanelHandler : MonoBehaviour, IDropHandler
     // TODO: Добавить ссылку на ваш Grid Layout Group или компонент, который расставляет предметы, если используете его
     // public GridLayoutGroup gridLayoutGroup;
 
+    [Header("Настройки предметов")]
+    [SerializeField] private int numberOfRandomItems = 4; // Количество случайных предметов
+    [SerializeField] private string itemsFolderPath = "Items"; // Путь к папке с префабами предметов
+
     private void Awake()
     {
         gameObject.tag = "ItemsPanel"; // Убедитесь что есть тег ItemsPanel
+    }
+
+    private void Start()
+    {
+        LoadRandomItems();
+    }
+
+    private void LoadRandomItems()
+    {
+        // Загружаем все префабы из папки Items
+        Object[] itemPrefabs = Resources.LoadAll(itemsFolderPath, typeof(GameObject));
+        
+        if (itemPrefabs.Length == 0)
+        {
+            Debug.LogError($"Не найдены префабы предметов в папке {itemsFolderPath}!");
+            return;
+        }
+
+        // Создаем список для хранения индексов
+        List<int> availableIndices = new List<int>();
+        for (int i = 0; i < itemPrefabs.Length; i++)
+        {
+            availableIndices.Add(i);
+        }
+
+        // Выбираем случайные предметы
+        for (int i = 0; i < numberOfRandomItems && availableIndices.Count > 0; i++)
+        {
+            // Выбираем случайный индекс
+            int randomIndex = Random.Range(0, availableIndices.Count);
+            int itemIndex = availableIndices[randomIndex];
+            availableIndices.RemoveAt(randomIndex);
+
+            // Создаем предмет
+            GameObject itemObject = Instantiate(itemPrefabs[itemIndex] as GameObject, transform);
+            Item item = itemObject.GetComponent<Item>();
+            
+            if (item != null)
+            {
+                inventoryItems.Add(item);
+                item.transform.localPosition = Vector3.zero;
+                Debug.Log($"Создан предмет: {itemObject.name}");
+            }
+        }
     }
 
     public void OnDrop(PointerEventData eventData)
