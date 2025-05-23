@@ -1147,7 +1147,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4854985278904413960, guid: c1f1d99559aa04b4b92d1c56d8b6b967, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 343.125
+      value: 343.12503
       objectReference: {fileID: 0}
     - target: {fileID: 4854985278904413960, guid: c1f1d99559aa04b4b92d1c56d8b6b967, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -3728,7 +3728,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5363291659068402710, guid: 49a8f34f36a06c5498534b56ade22644, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 50
+      value: 50.00003
       objectReference: {fileID: 0}
     - target: {fileID: 5363291659068402710, guid: 49a8f34f36a06c5498534b56ade22644, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -3920,7 +3920,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5363291659068402710, guid: 49a8f34f36a06c5498534b56ade22644, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 50
+      value: 50.00003
       objectReference: {fileID: 0}
     - target: {fileID: 5363291659068402710, guid: 49a8f34f36a06c5498534b56ade22644, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -4037,7 +4037,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5363291659068402710, guid: 49a8f34f36a06c5498534b56ade22644, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 50
+      value: 50.00003
       objectReference: {fileID: 0}
     - target: {fileID: 5363291659068402710, guid: 49a8f34f36a06c5498534b56ade22644, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -4589,7 +4589,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5363291659068402710, guid: 49a8f34f36a06c5498534b56ade22644, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 50
+      value: 50.00003
       objectReference: {fileID: 0}
     - target: {fileID: 5363291659068402710, guid: 49a8f34f36a06c5498534b56ade22644, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -6629,7 +6629,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5363291659068402710, guid: 49a8f34f36a06c5498534b56ade22644, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 50
+      value: 50.00003
       objectReference: {fileID: 0}
     - target: {fileID: 5363291659068402710, guid: 49a8f34f36a06c5498534b56ade22644, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -8404,7 +8404,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5363291659068402710, guid: 49a8f34f36a06c5498534b56ade22644, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 50
+      value: 50.00003
       objectReference: {fileID: 0}
     - target: {fileID: 5363291659068402710, guid: 49a8f34f36a06c5498534b56ade22644, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -8521,7 +8521,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5363291659068402710, guid: 49a8f34f36a06c5498534b56ade22644, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 50
+      value: 50.00003
       objectReference: {fileID: 0}
     - target: {fileID: 5363291659068402710, guid: 49a8f34f36a06c5498534b56ade22644, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -8735,7 +8735,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5363291659068402710, guid: 49a8f34f36a06c5498534b56ade22644, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 155
+      value: 155.00003
       objectReference: {fileID: 0}
     - target: {fileID: 5363291659068402710, guid: 49a8f34f36a06c5498534b56ade22644, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -8776,7 +8776,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1896156692
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9065,6 +9065,7 @@ MonoBehaviour:
   playButton: {fileID: 1941760569}
   upgradeButton: {fileID: 229733637}
   exitButton: {fileID: 68385572}
+  StartBattleButton: {fileID: 1896156691}
   player: {fileID: 318921454}
   gameUI: {fileID: 1690988586}
   healthSlider: {fileID: 751421520}

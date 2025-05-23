@@ -9,6 +9,7 @@ public class MenuManagerr : MonoBehaviour
     public GameObject playButton;
     public GameObject upgradeButton;
     public GameObject exitButton;
+    public GameObject StartBattleButton;
     public GameObject player; 
 
     [Header("Игровой режим")]
@@ -41,6 +42,7 @@ public class MenuManagerr : MonoBehaviour
         exitButton.SetActive(false);
 
         // Включаем игровые элементы
+        StartBattleButton.SetActive(true);
         gameUI.SetActive(true);
         player.SetActive(true);
 
@@ -110,7 +112,7 @@ public class MenuManagerr : MonoBehaviour
     {
         if (battleButtonText != null)
         {
-            battleButtonText.text = isPaused ? "СТАРТ БИТВЫ" : "ПАУЗА БИТВЫ";
+            battleButtonText.text = isPaused ? "FIGHT!" : "PAUSE";
         }
     }
 
