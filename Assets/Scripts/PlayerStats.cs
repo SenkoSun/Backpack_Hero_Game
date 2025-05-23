@@ -1,10 +1,13 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Collections.Generic;
 
-public class PlayerHealth : MonoBehaviour
+public class PlayerStats : MonoBehaviour
 {
     public int maxHealth = 100;
+
+
     public Slider healthSlider;
     public GameObject deathScreen; // Перетащите DeathScreen сюда
     
@@ -13,7 +16,14 @@ public class PlayerHealth : MonoBehaviour
 
     public GameObject player; // Перетащите игрока
     public GameObject[] enemies; // Перетащите всех врагов
-
+    static public Dictionary<string, int> charactiristis = new Dictionary<string, int>()
+    {
+        ["attack"] = 0,
+        ["defense"] = 0,
+        ["attack_speed"] = 0,
+        ["crit_damage"] = 0,
+        ["crit_chance"] = 0,
+    };
     void Start()
     {
         currentHealth = maxHealth;
@@ -25,8 +35,9 @@ public class PlayerHealth : MonoBehaviour
     public void TakeDamage(int damage)
     {
         if (isDead) return;
-        
-        currentHealth -= damage;
+        Debug.Log($"{charactiristis["defense"]}");
+        Debug.Log($"Player apple damage {damage - charactiristis["defense"]}");
+        currentHealth -= (damage - charactiristis["defense"]);
         UpdateHealthUI();
         
         if (currentHealth <= 0) Die();

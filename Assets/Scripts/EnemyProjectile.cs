@@ -8,7 +8,7 @@ public class EnemyProjectile : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            other.GetComponent<PlayerHealth>().TakeDamage(damage);
+            other.GetComponent<PlayerStats>().TakeDamage(damage);
             Destroy(gameObject);
         }
         else if (!other.CompareTag("Enemy")) // Чтобы не уничтожался при коллизии с другими врагами

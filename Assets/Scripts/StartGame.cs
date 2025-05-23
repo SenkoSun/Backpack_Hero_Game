@@ -65,12 +65,12 @@ public class MenuManagerr : MonoBehaviour
         if (healthSlider != null)
         {
             healthSlider.gameObject.SetActive(true);
-            PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
-            if (playerHealth != null)
+            PlayerStats playerStats = player.GetComponent<PlayerStats>();
+            if (playerStats != null)
             {
-                healthSlider.maxValue = playerHealth.maxHealth;
-                healthSlider.value = playerHealth.maxHealth;
-                playerHealth.ResetPlayer();
+                healthSlider.maxValue = playerStats.maxHealth;
+                healthSlider.value = playerStats.maxHealth;
+                playerStats.ResetPlayer();
             }
         }
         
