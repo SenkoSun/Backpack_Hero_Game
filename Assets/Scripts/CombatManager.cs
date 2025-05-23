@@ -40,10 +40,10 @@ public class CombatManager : MonoBehaviour
             else if (target.CompareTag("Player"))
             {
                 // Лечение игрока
-                PlayerHealth playerHealth = target.GetComponent<PlayerHealth>();
-                if (playerHealth != null)
+                PlayerStats playerStats = target.GetComponent<PlayerStats>();
+                if (playerStats != null)
                 {
-                    playerHealth.Heal(item.effectValue);
+                    playerStats.Heal(item.effectValue);
                 }
             }
         }

@@ -34,7 +34,7 @@ public class SimpleUpgradeSystem : MonoBehaviour
         
         // // Загрузка сохраненного уровня
         upgrade.currentLevel = PlayerPrefs.GetInt($"Upgrade_{index}_Level", 0);
-        PlayerHealth.charactiristis[names_characteristic[index]] = upgrade.currentLevel;
+        PlayerStats.charactiristis[names_characteristic[index]] = upgrade.currentLevel;
         Debug.Log($"{names_characteristic[index]} - {upgrade.statName}: {upgrade.currentLevel}");
         upgrade.slider.value = upgrade.currentLevel;
         
@@ -73,7 +73,7 @@ public class SimpleUpgradeSystem : MonoBehaviour
         // Улучшение
         upgrade.currentLevel++;
         upgrade.slider.value = upgrade.currentLevel;
-        PlayerHealth.charactiristis[names_characteristic[index]] = upgrade.currentLevel;
+        PlayerStats.charactiristis[names_characteristic[index]] = upgrade.currentLevel;
         PlayerPrefs.SetInt($"Upgrade_{index}_Level", upgrade.currentLevel);
         
         // Обновление интерфейса
