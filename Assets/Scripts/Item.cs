@@ -217,15 +217,65 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     public bool CanMerge(Item other) {
         // Предметы можно объединять только если:
         return itemType == other.itemType &&  // Одинакового типа
-               itemLevel == other.itemLevel && // Одинакового уровня
-               itemLevel < 3;                // Не максимальный уровень
+               itemLevel < 3 &&              // Не максимальный уровень
+               ((itemLevel == other.itemLevel) || // Одинакового уровня
+                (itemLevel == other.itemLevel + 1) || // Или текущий предмет на уровень выше
+                (itemLevel + 1 == other.itemLevel));  // Или текущий предмет на уровень ниже
     }
 
     public void MergeItems(Item other) {
+        // Определяем уровень нового предмета
+        int newLevel;
+        if (itemLevel == other.itemLevel) {
+            // Если уровни одинаковые, повышаем на 1
+            newLevel = itemLevel + 1;
+        } else {
+            // Если уровни разные, берем максимальный + 1
+            newLevel = Mathf.Max(itemLevel, other.itemLevel) + 1;
+        }
+
+        // Проверяем, не превышает ли новый уровень максимальный
+        if (newLevel > 3) {
+            Debug.Log("Невозможно объединить предметы: превышен максимальный уровень");
+            return;
+        }
+
+        // Сохраняем ссылки на слоты
+        Slot currentSlot = transform.parent.GetComponent<Slot>();
+        Slot otherSlot = other.transform.parent.GetComponent<Slot>();
+
         // Создаем новый предмет
         GameObject newItemObj = Instantiate(gameObject, transform.parent);
         Item newItem = newItemObj.GetComponent<Item>();
-        newItem.itemLevel = itemLevel + 1;
+        
+        // Копируем все необходимые свойства
+        newItem.itemType = itemType;
+        newItem.itemLevel = newLevel;
+        newItem.effectValue = effectValue;
+        newItem.cooldownTime = cooldownTime;
+        newItem.isEquipped = false;
+        
+        // Копируем свойства оружия
+        newItem.damage = damage;
+        newItem.attackRange = attackRange;
+        newItem.attackSpeed = attackSpeed;
+        newItem.isRanged = isRanged;
+        newItem.projectileSpeed = projectileSpeed;
+        newItem.criticalChance = criticalChance;
+        newItem.criticalMultiplier = criticalMultiplier;
+        
+        // Копируем UI компоненты
+        newItem.cooldownImage = cooldownImage;
+        newItem.levelSprites = levelSprites;
+        newItem.mergeEffectPrefab = mergeEffectPrefab;
+        
+        // Копируем RectTransform настройки
+        newItem.originalSize = originalSize;
+        newItem.originalAnchorsMin = originalAnchorsMin;
+        newItem.originalAnchorsMax = originalAnchorsMax;
+        newItem.originalPivot = originalPivot;
+
+        // Обновляем визуал
         newItem.UpdateVisuals();
 
         // Эффект объединения
@@ -233,9 +283,22 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
             Instantiate(mergeEffectPrefab, transform.position, Quaternion.identity);
         }
 
+        // Очищаем слоты перед уничтожением предметов
+        if (currentSlot != null) {
+            currentSlot.ClearSlot();
+        }
+        if (otherSlot != null) {
+            otherSlot.ClearSlot();
+        }
+
         // Уничтожаем старые предметы
         Destroy(other.gameObject);
         Destroy(gameObject);
+
+        // Устанавливаем новый предмет в слот
+        if (currentSlot != null) {
+            currentSlot.TryPlaceItem(newItem);
+        }
 
         Debug.Log($"Создан {itemType} уровня {newItem.itemLevel}");
     }
