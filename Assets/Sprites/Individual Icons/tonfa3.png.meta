@@ -172,7 +172,9 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      tonfa3_0: 799719977593638688
+      tonfa3_1: -11216490200105644
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

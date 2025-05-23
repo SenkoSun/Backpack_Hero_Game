@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      nunchucks5_0: -6587265265236883013
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
