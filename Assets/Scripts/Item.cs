@@ -14,6 +14,7 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     }
 
     [Header("Item Settings")]
+    public string itemId;           // Уникальный идентификатор предмета
     public ItemType itemType;        // Тип предмета
     public float effectValue;        // Значение эффекта (урон/лечение)
     public float cooldownTime;       // Время перезарядки
@@ -216,11 +217,9 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
     public bool CanMerge(Item other) {
         // Предметы можно объединять только если:
-        return itemType == other.itemType &&  // Одинакового типа
+        return gameObject.name == other.gameObject.name &&  // Один и тот же префаб
                itemLevel < 3 &&              // Не максимальный уровень
-               ((itemLevel == other.itemLevel) || // Одинакового уровня
-                (itemLevel == other.itemLevel + 1) || // Или текущий предмет на уровень выше
-                (itemLevel + 1 == other.itemLevel));  // Или текущий предмет на уровень ниже
+               Mathf.Abs(itemLevel - other.itemLevel) <= 1;  // Разница в уровнях не более 1
     }
 
     public void MergeItems(Item other) {
