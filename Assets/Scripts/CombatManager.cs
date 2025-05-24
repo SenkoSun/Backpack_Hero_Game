@@ -74,6 +74,7 @@ public class CombatManager : MonoBehaviour
             enemy.SetActive(true);
 
             EnemyController enemyController = enemy.GetComponent<EnemyController>();
+            enemyController.level = 1; 
             if (enemyController != null)
             {
                 enemyController.enabled = true;
@@ -82,7 +83,7 @@ public class CombatManager : MonoBehaviour
     }
 
     // Метод для запуска битвы
-    public void StartBattle()
+    public void StartBattle(int level)
     {
         if (!isBattleActive)
         {

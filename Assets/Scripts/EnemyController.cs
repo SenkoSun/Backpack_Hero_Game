@@ -5,6 +5,7 @@ public class EnemyController : MonoBehaviour
 {
     [Header("Настройки")]
     public float attackCooldown = 2f;
+    public int level = 0;
     public int damage = 10;
     public float maxHealth = 50f; // Максимальное здоровье врага
 
@@ -103,9 +104,13 @@ public class EnemyController : MonoBehaviour
     {
         Debug.Log($"{gameObject.name} died.");
         healthSlider.gameObject.SetActive(false);
+
+        // stonks
+        GoldManager.Instance.AddGold(200 * level); // 200 * level * (countenemy = 3) 
+
         // enemy.SetActive(false);
         // TODO: Добавить логику выпадения лута, анимацию смерти и т.д.
-        
+
         Destroy(gameObject); // Пока просто уничтожаем объект
         // CombatManager.Instance.ProverkaCombat();
     }

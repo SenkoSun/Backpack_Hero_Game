@@ -23,6 +23,8 @@ public class MenuManagerr : MonoBehaviour
 
     private bool isPaused = true; // Изначально битва на паузе
 
+    public int level = 1;
+
     public void StartGame()
     {
         // Убедитесь, что кнопка битвы и ее текст назначены
@@ -75,7 +77,9 @@ public class MenuManagerr : MonoBehaviour
 
         // Активируем врага (он не начнет атаковать до старта битвы благодаря проверке в EnemyController)
         // Invoke("ActivateEnemy", enemySpawnDelay);
-        CombatManager.Instance.StartBattle();
+
+        //начало боя
+        CombatManager.Instance.StartBattle(level);
         UpdateBattleButtonText();
     }
 

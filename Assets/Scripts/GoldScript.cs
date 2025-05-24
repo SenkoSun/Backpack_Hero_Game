@@ -18,7 +18,7 @@ public class GoldManager : MonoBehaviour {
         Gold += amount;
     }
     void Start() {
-    AddGold(100000); // Тест: +100 золота
+    AddGold(1000); // Тест: +100 золота
 }
     
 }
