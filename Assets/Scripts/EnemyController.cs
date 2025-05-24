@@ -3,6 +3,10 @@ using UnityEngine.UI; // Не забудьте добавить для рабо�
 using TMPro; // Добавляем для работы с TextMeshPro
 public class EnemyController : MonoBehaviour
 {
+    [Header("Спрайты")]
+    public Sprite[] skins;
+    public int currentSkinIndex = -1;
+
     [Header("Настройки")]
     public float attackCooldown = 2f;
     public int level = 0;
@@ -19,13 +23,15 @@ public class EnemyController : MonoBehaviour
     
     private Transform player;
     private float nextAttackTime;
+    private SpriteRenderer spriteRenderer;
 
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
+        spriteRenderer = GetComponent<SpriteRenderer>();
         
         // Если firePoint не назначен - используем позицию врага
-        if (firePoint == null) 
+        if (firePoint == null)
             firePoint = transform;
 
         // Инициализируем текущее здоровье максимальным при старте
@@ -37,6 +43,8 @@ public class EnemyController : MonoBehaviour
 
     void newEnemy()
     {
+        currentSkinIndex = (currentSkinIndex + 1) % 3;
+        spriteRenderer.sprite = skins[currentSkinIndex];
         Debug.Log($"{gameObject.name} created.");
         gameObject.SetActive(true);
         CombatManager.Instance.countEnemy--;
@@ -121,7 +129,7 @@ public class EnemyController : MonoBehaviour
 
         // stonks
         GoldManager.Instance.AddGold(200 * level); // 200 * level * (countenemy = 3)
-        
+
         if (CombatManager.Instance.countEnemy > 0)
         {
             //сразу создаем нового врага

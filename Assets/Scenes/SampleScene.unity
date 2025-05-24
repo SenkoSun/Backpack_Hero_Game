@@ -3867,7 +3867,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -503, y: 76}
+  m_AnchoredPosition: {x: 751, y: -20}
   m_SizeDelta: {x: 160, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &950963320
@@ -5399,12 +5399,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackCooldown: 4
+  level: 0
   damage: 10
   maxHealth: 50
-  healthSlider: {fileID: 751421520}
+  healthSlider: {fileID: 950963320}
   projectilePrefab: {fileID: 4722953331963789871, guid: 6645d6dcc1292e6478016c9aee02f5b7, type: 3}
   firePoint: {fileID: 1321861737}
-  projectileSpeed: 5
+  projectileSpeed: 10
 --- !u!61 &1335425759
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -5443,8 +5444,8 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.5, y: 0.546875}
-    newSize: {x: 0.5, y: 0.546875}
+    oldSize: {x: 0.32, y: 0.35}
+    newSize: {x: 0.32, y: 0.35}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -5522,12 +5523,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 4723107735738678597, guid: c0a2f6f5066520f4191bda1deb5511d6, type: 3}
+  m_Sprite: {fileID: -3781910019033479378, guid: df1b066adecc9c740aebab594f964366, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.5, y: 0.546875}
+  m_Size: {x: 0.32, y: 0.35}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -7873,6 +7874,7 @@ MonoBehaviour:
   healthSlider: {fileID: 751421520}
   battleToggleButton: {fileID: 1896156693}
   battleButtonText: {fileID: 1986000596}
+  level: 1
 --- !u!1 &1979429994
 GameObject:
   m_ObjectHideFlags: 0

@@ -11,7 +11,7 @@ public class CombatManager : MonoBehaviour
     public GameObject enemy;
     public float enemySpawnDelay = 1f;
 
-    public int countEnemy = 2;
+    public int countEnemy = 3;
 
     private void Awake()
     {
