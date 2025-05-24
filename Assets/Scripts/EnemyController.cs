@@ -29,16 +29,31 @@ public class EnemyController : MonoBehaviour
             firePoint = transform;
 
         // Инициализируем текущее здоровье максимальным при старте
+        newEnemy();
+
+        // Устанавливаем время следующей атаки в будущем, чтобы избежать немедленной атаки при спавне
+        nextAttackTime = Time.time + attackCooldown; // Можно установить еще больше, если нужна дополнительная задержка после старта битвы
+    }
+
+    void newEnemy()
+    {
+        Debug.Log($"{gameObject.name} created.");
+        gameObject.SetActive(true);
+        CombatManager.Instance.countEnemy--;
+
         currentHealth = maxHealth;
+        maxHealth = 50f * level;
+        damage = damage * level;
+
+
         if (healthSlider != null)
         {
             healthSlider.gameObject.SetActive(true);
             healthSlider.maxValue = maxHealth;
             healthSlider.value = maxHealth;
         }
+
         UpdateHealthUI();
-        // Устанавливаем время следующей атаки в будущем, чтобы избежать немедленной атаки при спавне
-        nextAttackTime = Time.time + attackCooldown; // Можно установить еще больше, если нужна дополнительная задержка после старта битвы
     }
 
     void Update()
@@ -103,15 +118,31 @@ public class EnemyController : MonoBehaviour
     void Die()
     {
         Debug.Log($"{gameObject.name} died.");
-        healthSlider.gameObject.SetActive(false);
 
         // stonks
-        GoldManager.Instance.AddGold(200 * level); // 200 * level * (countenemy = 3) 
+        GoldManager.Instance.AddGold(200 * level); // 200 * level * (countenemy = 3)
+        
+        if (CombatManager.Instance.countEnemy > 0)
+        {
+            //сразу создаем нового врага
+            healthSlider.gameObject.SetActive(false);
+            gameObject.SetActive(false);
+            // healthSlider.SetActive(false);
+            Invoke("newEnemy", 2);
+        }
+        else
+        {
+            CombatManager.Instance.EndBattle();
+            healthSlider.gameObject.SetActive(false);
+            Destroy(gameObject);
+        }
+        
+
 
         // enemy.SetActive(false);
         // TODO: Добавить логику выпадения лута, анимацию смерти и т.д.
 
-        Destroy(gameObject); // Пока просто уничтожаем объект
+        // Destroy(gameObject); // Пока просто уничтожаем объект
         // CombatManager.Instance.ProverkaCombat();
     }
 }

@@ -61,7 +61,6 @@ public class CombatManager : MonoBehaviour
         Debug.Log($"{countEnemy} {enemy} {isBattleActive}");
         if (isBattleActive && countEnemy > 0 && enemy != null)
         {
-            Debug.Log("Враг создан");
             //Вызов ActivateEnemy c Задержкой
             Invoke("ActivateEnemy", enemySpawnDelay);
         }
