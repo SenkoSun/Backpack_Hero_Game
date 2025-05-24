@@ -7,6 +7,12 @@ public class CombatManager : MonoBehaviour
     [Header("Battle State")]
     public bool isBattleActive = false; // Состояние битвы: активна или нет
 
+    [Header("Враг")]
+    public GameObject enemy;
+    public float enemySpawnDelay = 1f;
+
+    public int countEnemy = 2;
+
     private void Awake()
     {
         if (Instance == null)
@@ -50,6 +56,31 @@ public class CombatManager : MonoBehaviour
         // TODO: Добавить логику для других типов предметов (оружие, броня, аксессуары)
     }
 
+    public void ProverkaCombat()
+    {
+        Debug.Log($"{countEnemy} {enemy} {isBattleActive}");
+        if (isBattleActive && countEnemy > 0 && enemy != null)
+        {
+            Debug.Log("Враг создан");
+            //Вызов ActivateEnemy c Задержкой
+            Invoke("ActivateEnemy", enemySpawnDelay);
+        }
+    }
+
+    void ActivateEnemy()
+    {
+        if (enemy != null)
+        {
+            enemy.SetActive(true);
+
+            EnemyController enemyController = enemy.GetComponent<EnemyController>();
+            if (enemyController != null)
+            {
+                enemyController.enabled = true;
+            }
+        }
+    }
+
     // Метод для запуска битвы
     public void StartBattle()
     {
@@ -57,6 +88,7 @@ public class CombatManager : MonoBehaviour
         {
             isBattleActive = true;
             Debug.Log("Battle Started!");
+            ProverkaCombat();
             // TODO: Возможно, добавить логику для старта вражеских действий, музыки и т.д.
         }
     }

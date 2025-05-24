@@ -16,9 +16,6 @@ public class MenuManagerr : MonoBehaviour
     public GameObject gameUI;
     public Slider healthSlider; // Перетащите сюда ваш HP-бар
     
-    [Header("Враг")]
-    public GameObject enemy;
-    public float enemySpawnDelay = 2f;
 
     [Header("Кнопка Битвы")]
     public Button battleToggleButton; // Перетащите сюда кнопку Старт/Пауза
@@ -50,17 +47,19 @@ public class MenuManagerr : MonoBehaviour
         if (CombatManager.Instance != null)
         {
             CombatManager.Instance.isBattleActive = false; // Убеждаемся, что битва не активна при старте игры
-            isPaused = true; // Устанавливаем начальное состояние паузы
+            isPaused = false; // Устанавливаем начальное состояние паузы
             UpdateBattleButtonText(); // Обновляем текст кнопки в соответствии с начальным состоянием
 
             // Привязываем наш новый метод к кнопке
             battleToggleButton.onClick.RemoveAllListeners(); // Удаляем старые слушатели (если были)
             battleToggleButton.onClick.AddListener(ToggleBattleState); // Добавляем нового слушателя
 
-        } else {
-             Debug.LogError("CombatManager.Instance не найден! Невозможно управлять битвой.");
         }
-        
+        else
+        {
+            Debug.LogError("CombatManager.Instance не найден! Невозможно управлять битвой.");
+        }
+
         // Инициализируем HP-бар
         if (healthSlider != null)
         {
@@ -73,23 +72,34 @@ public class MenuManagerr : MonoBehaviour
                 playerStats.ResetPlayer();
             }
         }
-        
+
         // Активируем врага (он не начнет атаковать до старта битвы благодаря проверке в EnemyController)
-        Invoke("ActivateEnemy", enemySpawnDelay);
+        // Invoke("ActivateEnemy", enemySpawnDelay);
+        CombatManager.Instance.StartBattle();
+        UpdateBattleButtonText();
     }
 
-    void ActivateEnemy()
-    {
-        if (enemy != null)
-        {
-            enemy.SetActive(true);
-            EnemyController enemyController = enemy.GetComponent<EnemyController>();
-            if (enemyController != null)
-            {
-                enemyController.enabled = true;
-            }
-        }
-    }
+    // void ActivateEnemy()
+    // {
+    //     if (enemy != null)
+    //     {
+    //         enemy.SetActive(true);
+    //         EnemyController enemyController = enemy.GetComponent<EnemyController>();
+    //         if (enemyController != null)
+    //         {
+    //             enemyController.enabled = true;
+    //         }
+    //     }
+    // }
+
+    // static public void ProverkaCombat()
+    // {
+    //     if (CombatManager.Instance.isBattleActive && CombatManager.Instance.countEnemy > 0 && enemy == null)
+    //     {
+    //         CombatManager.Instance.countEnemy -= 1;
+    //         ActivateEnemy();
+    //     }
+    // }
 
     // Новый метод для переключения состояния битвы
     public void ToggleBattleState()
