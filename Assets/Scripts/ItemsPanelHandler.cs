@@ -35,23 +35,14 @@ public class ItemsPanelHandler : MonoBehaviour, IDropHandler
             return;
         }
 
-        // Создаем список для хранения индексов
-        List<int> availableIndices = new List<int>();
-        for (int i = 0; i < itemPrefabs.Length; i++)
-        {
-            availableIndices.Add(i);
-        }
-
-        // Выбираем случайные предметы
-        for (int i = 0; i < numberOfRandomItems && availableIndices.Count > 0; i++)
+        // Создаем случайные предметы
+        for (int i = 0; i < numberOfRandomItems; i++)
         {
             // Выбираем случайный индекс
-            int randomIndex = Random.Range(0, availableIndices.Count);
-            int itemIndex = availableIndices[randomIndex];
-            availableIndices.RemoveAt(randomIndex);
+            int randomIndex = Random.Range(0, itemPrefabs.Length);
 
             // Создаем предмет
-            GameObject itemObject = Instantiate(itemPrefabs[itemIndex] as GameObject, transform);
+            GameObject itemObject = Instantiate(itemPrefabs[randomIndex] as GameObject, transform);
             Item item = itemObject.GetComponent<Item>();
             
             if (item != null)
